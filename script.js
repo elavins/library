@@ -9,7 +9,7 @@ const form = document.createElement('div');
 
 form.classList.add('form');
 form.innerHTML = '<div class="form-head">NEW BOOK <span class="close">[X]</span></div>';
-form.innerHTML += `<form action="example.com/path" method="post">
+form.innerHTML += `<form action ="#" id="addBookForm">
                     <label for="title">Title:</label>
                     <input type="text" id="title" name="title" placeholder="...">
                     <br>
@@ -24,8 +24,14 @@ form.innerHTML += `<form action="example.com/path" method="post">
                     <br>
                     <button type="submit">Submit</button>
                     <button type="reset">Reset</button>              
-                </form>`
+                </form>`;
 
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let input = document.getElementById('addBookForm');
+    let x = new Book(input.elements[0].value, input.elements[1].value, input.elements[2].value, input.elements[3].value);
+    library.addBook(x);
+});
 
 const addBtn = document.querySelector('#add-book');
 addBtn.addEventListener('click', () => {
@@ -104,6 +110,3 @@ library.addBook(b);
 library.addBook(c);
 library.addBook(d);
 library.addBook(c);
-
-
-library.print();
