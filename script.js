@@ -51,16 +51,30 @@ class Library {
 
     printCard(i) {
         let newBook = document.createElement("div");
+
         let removeBtn = document.createElement("span");
         removeBtn.className = 'close-card';
         removeBtn.innerText = '[X]';
         removeBtn.addEventListener('click', () => {
             this.removeBook(i);
         });
+
         newBook.className = 'card';
         newBook.setAttribute('data-index', i);
         newBook.innerText = this.books[i].info;
         newBook.prepend(removeBtn);
+
+        let readCheckbox = document.createElement("input");
+        readCheckbox.setAttribute('type', 'checkbox');
+        if (this.books[i].read) { readCheckbox.setAttribute('checked', 'checked') };
+        readCheckbox.addEventListener('click', () => {
+            this.books[i].read = !this.books[i].read;
+            newBook.innerText = this.books[i].info;
+            newBook.prepend(removeBtn);
+            newBook.append(readCheckbox);
+        });
+        newBook.append(readCheckbox);
+
         container.appendChild(newBook);
     }
 
@@ -91,7 +105,11 @@ class Book {
         return `Title: ${this.title}
                 Author: ${this.author}
                 ${this.pages} pages
-                ${this.read ? 'not read yet' : 'finished reading'}`
+                ${this.read ? 'finished reading' : 'not read yet'}`
+    }
+
+    toggleRead() {
+        this.read = this.read ? false : true;
     }
 }
 
